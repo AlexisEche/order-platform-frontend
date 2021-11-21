@@ -5,6 +5,11 @@
 		<div class="home--containerCards">
 			<ord-card v-for="(food, index) in foodList" :key="index" :food="food" />
 		</div>
+		<button id="show-modal" @click="showModal = true">Show Modal</button>
+
+		<transition name="modal">
+			<ord-modal v-if="showModal" @close="showModal = false"> </ord-modal>
+		</transition>
 	</div>
 </template>
 
@@ -13,6 +18,7 @@ import { defineComponent, ref } from "vue";
 import OrdBanner from "@/components/organisms/OrdBanner";
 import OrdCategories from "@/components/organisms/OrdCategories";
 import OrdCard from "@/components/organisms/OrdCard";
+import OrdModal from "@/components/organisms/OrdModal";
 import { Food } from "@/typing/interface";
 import water from "@/assets/water.png";
 
@@ -22,6 +28,7 @@ export default defineComponent({
 		OrdBanner,
 		OrdCategories,
 		OrdCard,
+		OrdModal,
 	},
 	setup() {
 		const foodList = ref<Food[]>([
@@ -34,7 +41,8 @@ export default defineComponent({
 			},
 		]);
 
-		return { foodList };
+		const showModal = ref(false);
+		return { foodList, showModal };
 	},
 });
 </script>
