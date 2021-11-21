@@ -5,3 +5,11 @@ export interface Category {
 	iconName: IconDefinition;
 	iconColor: string;
 }
+
+export interface Food {
+	name: string;
+	description: string;
+	image: string;
+	isSelected: boolean;
+	price: number;
+}

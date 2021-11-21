@@ -1,2 +1,49 @@
 .card {
+	background-color: var(--ord-light-gray);
+	width: 200px;
+	border-radius: 15px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	padding-left: 1rem;
+
+	&--image {
+		align-self: center;
+		width: 180px;
+		padding: 1rem 1rem 1rem 0;
+	}
+	&--name {
+		font-weight: bold;
+	}
+	&--description {
+		font-weight: 500;
+	}
+	&--add {
+		border-radius: 50px 0px 15px;
+		border: none;
+		background-color: var(--ord-yellow);
+		color: var(--ord-white);
+		width: 2rem;
+		height: 2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-left: 5px;
+		font-size: 20px;
+		font-weight: bold;
+		cursor: pointer;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+	&--price {
+		font-weight: bold;
+		margin: 10px 0;
+	}
+	&--buy {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+	}
 }
