@@ -1,0 +1,64 @@
+.banner {
+	display: flex;
+	align-items: center;
+	height: 30%;
+	background-color: var(--ord-light-gray);
+	&--image {
+		width: 30%;
+		padding: 1rem;
+	}
+	&--description {
+		padding-left: 2rem;
+		&__title {
+			color: var(--ord-gray);
+			font-size: 3rem;
+			font-weight: 900;
+			font-family: var(--ord-baloo);
+		}
+		&__subtitle {
+			color: var(--ord-gray);
+			font-size: 2.5rem;
+			font-weight: 900;
+			font-family: var(--ord-baloo);
+		}
+	}
+}
+
+@media screen and (max-width: 910px) {
+	.banner {
+		&--description {
+			&__title {
+				font-size: 2rem;
+			}
+			&__subtitle {
+				font-size: 2rem;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.banner {
+		&--description {
+			&__title {
+				font-size: 1.5rem;
+			}
+			&__subtitle {
+				font-size: 1.5rem;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.banner {
+		&--description {
+			&__title {
+				font-size: 1rem;
+			}
+			&__subtitle {
+				font-size: 1rem;
+			}
+		}
+	}
+}
