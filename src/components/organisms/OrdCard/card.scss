@@ -12,6 +12,9 @@
 		width: 180px;
 		padding: 1rem 1rem 1rem 0;
 		cursor: pointer;
+		&_modal {
+			width: 100%;
+		}
 	}
 	&--name {
 		font-weight: bold;
