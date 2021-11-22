@@ -21,6 +21,7 @@ import OrdCard from "@/components/organisms/OrdCard";
 import OrdModal from "@/components/organisms/OrdModal";
 import { Food } from "@/typing/interface";
 import water from "@/assets/water.png";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
 	name: "OrdHome",
@@ -31,6 +32,10 @@ export default defineComponent({
 		OrdModal,
 	},
 	setup() {
+		const router = useRouter();
+		const goToShoppingCart = () => {
+			router.push({ name: "Cart" });
+		};
 		const foodList = ref<Food[]>([
 			{
 				name: "Water",

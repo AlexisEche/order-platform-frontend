@@ -32,7 +32,7 @@
 				/>
 				<button
 					class="signup--container__form_submitButton"
-					@click="signupFromStoreMethod"
+					@click.prevent="signupFromStoreMethod"
 				>
 					Sign up
 				</button>
@@ -49,11 +49,16 @@ import { defineComponent, ref } from "vue";
 import { UserSignup } from "@/typing/interface";
 import redpple from "@/assets/manzana-roja.svg";
 import signup from "@/assets/signup.svg";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
 	name: "OrdSignup",
 	components: {},
 	setup() {
+		const router = useRouter();
+		const goToLogin = () => {
+			router.push({ name: "Login" });
+		};
 		const userSignup = ref<UserSignup>({
 			username: "",
 			password: "",
@@ -70,11 +75,8 @@ export default defineComponent({
 			if (userSignup.value.username && userSignup.value.password) {
 				isLoading.value = true;
 				const test = signupFromStore();
+				router.push({ name: "Login" });
 			}
-		};
-
-		const goToLogin = () => {
-			console.log("goToLogin");
 		};
 
 		return {

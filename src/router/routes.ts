@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: "/login",
-		name: "Login",
+		name: "Registration",
 		component: () => import("@/layouts/OrdRegistrationLayout"),
 		children: [
 			{
