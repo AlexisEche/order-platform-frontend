@@ -51,7 +51,7 @@ import redpple from "@/assets/manzana-roja.svg";
 import signup from "@/assets/signup.svg";
 
 export default defineComponent({
-	name: "Ordsignup",
+	name: "OrdSignup",
 	components: {},
 	setup() {
 		const userSignup = ref<UserSignup>({

@@ -1,0 +1,11 @@
+.cart {
+	padding: 1rem;
+	display: flex;
+	gap: 1rem;
+	&--purchases {
+		width: 50%;
+	}
+	&--cards {
+		width: 50%;
+	}
+}

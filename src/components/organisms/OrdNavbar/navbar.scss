@@ -16,4 +16,26 @@
 			font-size: 1.25rem;
 		}
 	}
+	&--cart_container {
+		cursor: pointer;
+		right: 1rem;
+		position: absolute;
+		border-radius: 50%;
+		width: 35px;
+		height: 35px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&--cart_container:hover {
+		background: var(--ord-light-gray);
+	}
+
+	&--cart {
+		color: var(--ord-secondary);
+		cursor: pointer;
+	}
+	&--cart:hover {
+		color: var(--ord-red);
+	}
 }

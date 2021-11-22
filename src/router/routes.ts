@@ -11,6 +11,11 @@ const routes: Array<RouteRecordRaw> = [
 				name: "Home",
 				component: () => import("@/pages/OrdHome"),
 			},
+			{
+				path: "/cart",
+				name: "Cart",
+				component: () => import("@/pages/OrdCart"),
+			},
 		],
 	},
 	{
