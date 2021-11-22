@@ -13,3 +13,14 @@ export interface Food {
 	isSelected: boolean;
 	price: number;
 }
+
+export interface UserLogin {
+	username: string;
+	password: string;
+}
+
+export interface UserSignup {
+	username: string;
+	password: string;
+	passwordConfirm: string;
+}

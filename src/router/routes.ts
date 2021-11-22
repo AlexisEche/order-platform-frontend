@@ -13,6 +13,23 @@ const routes: Array<RouteRecordRaw> = [
 			},
 		],
 	},
+	{
+		path: "/login",
+		name: "Login",
+		component: () => import("@/layouts/OrdRegistrationLayout"),
+		children: [
+			{
+				path: "/login",
+				name: "Login",
+				component: () => import("@/pages/OrdLogin"),
+			},
+			{
+				path: "/signup",
+				name: "Signup",
+				component: () => import("@/pages/OrdSignup"),
+			},
+		],
+	},
 ];
 
 export default routes;

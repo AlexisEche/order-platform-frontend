@@ -49,9 +49,6 @@ export default defineComponent({
 	name: "OrdLogin",
 	components: {},
 	setup() {
-		const variable = ref<InstanceType<typeof String>>("");
-		const isPwd = ref<InstanceType<typeof Boolean>>(true);
-		const right = ref<InstanceType<typeof Boolean>>(false);
 		const userLogin = ref<UserLogin>({
 			username: "",
 			password: "",
@@ -75,12 +72,9 @@ export default defineComponent({
 		};
 
 		return {
-			isPwd,
-			right,
 			userLogin,
 			isLoading,
 			loginFromStoreMethod,
-			variable,
 			goToRegister,
 			redpple,
 			login,
