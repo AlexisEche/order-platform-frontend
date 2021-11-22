@@ -1,0 +1,14 @@
+.purchase {
+	padding: 0.5rem;
+	background: var(--ord-light);
+	border-radius: 15px;
+	display: flex;
+	gap: 15px;
+	&--image {
+		width: 50px;
+	}
+	&--title {
+	}
+	&--amount {
+	}
+}
