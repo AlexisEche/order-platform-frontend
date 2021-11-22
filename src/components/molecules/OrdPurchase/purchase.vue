@@ -1,8 +1,11 @@
 <template>
 	<div class="purchase">
 		<img class="purchase--image" :src="purchase.image" alt="" />
-		<p class="purchase--title">{{ purchase.title }}</p>
-		<p class="purchase--amount">{{ purchase.amount }}</p>
+		<div>
+			<p class="purchase--title">{{ purchase.name }}</p>
+			<p class="purchase--amount">x{{ purchase.amount }}</p>
+		</div>
+		<p class="purchase--price">S/{{ purchase.price * purchase.amount }}</p>
 	</div>
 </template>
 
@@ -14,6 +17,7 @@ interface Purchase {
 	image: string;
 	title: string;
 	amount: number;
+	price: number;
 }
 
 export default defineComponent({
