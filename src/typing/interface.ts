@@ -7,11 +7,14 @@ export interface Category {
 }
 
 export interface Food {
+	id: number;
 	name: string;
 	description: string;
 	image: string;
 	isSelected: boolean;
 	price: number;
+	category: string;
+	amount?: number;
 }
 
 export interface UserLogin {

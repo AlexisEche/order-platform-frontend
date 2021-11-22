@@ -2,9 +2,9 @@
 	<div class="cart">
 		<div class="cart--cards">
 			<ord-card-cart
-				v-for="(food, index) in foodList"
+				v-for="(purchase, index) in purchases"
 				:key="index"
-				:food="food"
+				:food="purchase"
 			/>
 		</div>
 		<div class="cart--purchases">
@@ -14,26 +14,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import water from "@/assets/water.png";
 import { Food } from "@/typing/interface";
 import OrdCardCart from "@/components/organisms/OrdCardCart";
 import OrdPurchases from "@/components/organisms/OrdPurchases";
 
+import { useStore } from "vuex";
 export default defineComponent({
 	name: "OrdCart",
 	components: { OrdCardCart, OrdPurchases },
 	setup() {
+		const store = useStore();
+		const purchases = ref(computed(() => store.state.order.purchases));
 		const foodList = ref<Food[]>([
 			{
+				id: 0,
 				name: "Water",
+				category: "drinks",
 				description: "First drink",
 				isSelected: true,
 				price: 1,
 				image: water,
+				amount: 1,
 			},
 		]);
-		return { water, foodList };
+		return { water, foodList, purchases };
 	},
 });
 </script>
