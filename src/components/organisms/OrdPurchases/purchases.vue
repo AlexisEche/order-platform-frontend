@@ -6,16 +6,26 @@
 			:key="index"
 			:purchase="purchase"
 		/>
+		<p v-if="totalPrice != 0" class="purchases--price">
+			Total Price S/.{{ totalPrice }}
+		</p>
+		<div v-else class="purchases--subtitle">
+			<p>
+				Nothing yet,
+				<span class="purchases--goToHome" @click="goToHome"> go home </span>
+			</p>
+		</div>
+
 		<button class="purchases--confirmButton">Confirm</button>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import healthly from "@/assets/healthly.png";
-import { Category } from "@/typing/interface";
 import OrdPurchase from "@/components/molecules/OrdPurchase";
-import water from "@/assets/water.png";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 interface Purchase {
 	image: string;
@@ -29,17 +39,22 @@ export default defineComponent({
 	},
 	props: {},
 	setup() {
-		const purchases = ref<Purchase[]>([
-			{
-				image: water,
-				title: "Water",
-				amount: 1,
-			},
-		]);
+		const router = useRouter();
+		const store = useStore();
+		const purchases = ref(computed(() => store.state.order.purchases));
+		const totalPrice = ref(
+			computed(() => store.state.order.totalPricePurchases)
+		);
+
+		const goToHome = () => {
+			router.push({ name: "Home" });
+		};
 
 		return {
 			healthly,
 			purchases,
+			totalPrice,
+			goToHome,
 		};
 	},
 });

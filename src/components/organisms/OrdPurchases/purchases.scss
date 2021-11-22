@@ -7,9 +7,27 @@
 	height: 100%;
 
 	&--title {
+		color: var(--ord-gray);
 		padding-bottom: 1rem;
 		font-weight: bold;
 		font-size: 1.15rem;
+		text-align: start;
+	}
+	&--price {
+		color: var(--ord-gray);
+		padding: 1rem 0;
+		font-weight: bold;
+		font-size: 1.15rem;
+		text-align: end;
+	}
+	&--subtitle {
+		color: var(--ord-gray);
+		font-size: 1.15rem;
+		text-align: center;
+	}
+	&--goToHome {
+		cursor: pointer;
+		font-weight: bold;
 	}
 	&--confirmButton {
 		margin-top: 1rem;
