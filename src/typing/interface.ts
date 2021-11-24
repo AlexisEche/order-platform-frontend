@@ -11,7 +11,6 @@ export interface Food {
 	name: string;
 	description: string;
 	image: string;
-	isSelected: boolean;
 	price: number;
 	category: string;
 	amount?: number;
@@ -26,4 +25,11 @@ export interface UserSignup {
 	username: string;
 	password: string;
 	passwordConfirm: string;
+}
+
+export interface Purchase {
+	image: string;
+	title: string;
+	amount: number;
+	price: number;
 }

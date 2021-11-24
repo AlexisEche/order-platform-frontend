@@ -33,7 +33,6 @@ export default defineComponent({
 				name: "Water",
 				category: "drinks",
 				description: "First drink",
-				isSelected: true,
 				price: 1,
 				image: water,
 				amount: 1,
