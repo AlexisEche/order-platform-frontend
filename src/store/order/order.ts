@@ -2,9 +2,16 @@ import { State } from "../index";
 import { Food } from "@/typing/interface";
 
 import { MutationTree, ActionTree } from "vuex";
+import { orderService } from "@/services/";
 
 export const moduleOrder = {
-	state: { count: 15, title: "mancora", purchases: [], totalPricePurchases: 0 },
+	state: {
+		count: 15,
+		purchases: [],
+		orderList: [],
+		orderListFiltered: [],
+		totalPricePurchases: 0,
+	},
 	mutations: <MutationTree<State>>(<unknown>{
 		increment(state: State) {
 			state.count++;
@@ -23,7 +30,7 @@ export const moduleOrder = {
 		},
 		addPurchase(state: State, purchase: Food) {
 			state.purchases = state.purchases.filter((value) => {
-				return value.id != purchase.id;
+				return value.pk != purchase.pk;
 			});
 
 			if (!state.purchases.includes(purchase)) {
@@ -32,25 +39,36 @@ export const moduleOrder = {
 		},
 		addCountProduct(state: State, currentPurchase: Food) {
 			const count = state.purchases.filter(
-				(purchase) => purchase.id == currentPurchase.id
+				(purchase) => purchase.pk == currentPurchase.pk
 			);
 			count[0].amount ? (count[0].amount = count[0].amount + 1) : 1;
 		},
 
 		decrementCountProduct(state: State, currentPurchase: Food) {
 			const count = state.purchases.filter(
-				(purchase) => purchase.id == currentPurchase.id
+				(purchase) => purchase.pk == currentPurchase.pk
 			);
 			count[0].amount ? (count[0].amount = count[0].amount - 1) : 1;
 		},
-		deletePurchase(state: State, purchaseId: number) {
+		orderList(state: State, orderList: Food[]) {
+			state.orderList = orderList;
+			state.orderListFiltered = orderList;
+		},
+		filterByCategory(state: State, category: string) {
+			category != "todos"
+				? (state.orderListFiltered = [
+						...state.orderList.filter((order) => order.category == category),
+				  ])
+				: (state.orderListFiltered = state.orderList);
+		},
+		deletePurchase(state: State, purchasepk: number) {
 			const purchaseAmountByProduct = state.purchases.find(
-				(purchase) => purchase.id === purchaseId
+				(purchase) => purchase.pk === purchasepk
 			);
 			state.purchases = [
 				...new Set(
 					state.purchases.filter(
-						(currentPurchase) => currentPurchase.id != purchaseId
+						(currentPurchase) => currentPurchase.pk != purchasepk
 					)
 				),
 			];
@@ -58,7 +76,10 @@ export const moduleOrder = {
 				state.totalPricePurchases -
 				(purchaseAmountByProduct?.amount != undefined
 					? purchaseAmountByProduct?.amount
-					: 1);
+					: 1) *
+					(purchaseAmountByProduct?.price != undefined
+						? purchaseAmountByProduct?.price
+						: 1);
 		},
 	}),
 	actions: <ActionTree<State, any>>{
@@ -80,8 +101,15 @@ export const moduleOrder = {
 				commit("decrementCountProduct", currentPurchase);
 				commit("updateTotalPricePurchasesLength");
 			} else {
-				commit("deletePurchase", currentPurchase.id);
+				commit("deletePurchase", currentPurchase.pk);
 			}
+		},
+		async recipes({ commit }) {
+			return await orderService.recipes().then((res) => {
+				commit("orderList", res);
+
+				return res;
+			});
 		},
 	},
 };

@@ -1,8 +1,16 @@
 .home {
+	display: flex;
+	flex-direction: column;
 	&--containerCards {
 		margin: 1rem;
 		display: flex;
 		gap: 1rem;
 		flex-wrap: wrap;
+
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
 	}
+}
+.loading {
+	align-self: center;
 }

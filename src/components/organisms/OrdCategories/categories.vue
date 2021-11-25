@@ -4,6 +4,7 @@
 			v-for="(category, index) in categories"
 			:category="category"
 			:key="index"
+			@click="filterByCategory(category.code)"
 		/>
 	</div>
 </template>
@@ -19,7 +20,9 @@ import {
 	faUtensils,
 	faDrumstickBite,
 	faIceCream,
+	faBars,
 } from "@fortawesome/free-solid-svg-icons";
+import { useStore } from "vuex";
 
 export default defineComponent({
 	name: "OrdCategories",
@@ -27,29 +30,46 @@ export default defineComponent({
 		OrdCategory,
 	},
 	setup() {
+		const store = useStore();
+
+		const filterByCategory = (category: string) => {
+			store.commit("filterByCategory", category);
+		};
+
 		const categories = ref<Category[]>([
 			{
+				name: "Todos",
+				code: "todos",
+				iconName: faBars,
+				iconColor: "#35393D",
+			},
+			{
 				name: "Bebidas",
+				code: "bebidas",
 				iconName: faCoffee,
 				iconColor: "#0097e6",
 			},
 			{
 				name: "Desayunos",
+				code: "desayuno",
 				iconName: faBacon,
 				iconColor: "#c23616",
 			},
 			{
 				name: "Almuerzo",
+				code: "almuerzo",
 				iconName: faDrumstickBite,
 				iconColor: "#273c75",
 			},
 			{
 				name: "Cena",
+				code: "cena",
 				iconName: faUtensils,
 				iconColor: "#44bd32",
 			},
 			{
 				name: "Aperitivos",
+				code: "aperitivo",
 				iconName: faIceCream,
 				iconColor: "#ff9ff3",
 			},
@@ -57,6 +77,7 @@ export default defineComponent({
 		return {
 			healthly,
 			categories,
+			filterByCategory,
 		};
 	},
 });

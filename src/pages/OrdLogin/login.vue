@@ -24,10 +24,12 @@
 					placeholder="Password"
 					class="login--container__form_input"
 					v-model="userLogin.password"
+					type="password"
 				/>
+
 				<button
 					class="login--container__form_submitButton"
-					@click.prevent="loginFromStoreMethod"
+					@click.prevent="loginFromStore"
 				>
 					Login
 				</button>
@@ -45,29 +47,28 @@ import { UserLogin } from "@/typing/interface";
 import redpple from "@/assets/manzana-roja.svg";
 import login from "@/assets/login.svg";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
 	name: "OrdLogin",
-	components: {},
 	setup() {
 		const router = useRouter();
+		const store = useStore();
 		const userLogin = ref<UserLogin>({
 			username: "",
 			password: "",
 		});
 
-		let isLoading = ref(false);
-
-		const loginFromStore = () => {
-			console.log("login");
+		const loginFromStore = async () => {
+			return await store
+				.dispatch("login", userLogin.value)
+				.then(() => router.push({ name: "Home" }));
 		};
 
 		const loginFromStoreMethod = () => {
-			// if (userLogin.value.username && userLogin.value.password) {
-			// 	isLoading.value = true;
-			// 	// const test = loginFromStore();
-			// }
-			router.push({ name: "Home" });
+			if (userLogin.value.username && userLogin.value.password) {
+				loginFromStore();
+			}
 		};
 
 		const goToRegister = () => {
@@ -76,7 +77,7 @@ export default defineComponent({
 
 		return {
 			userLogin,
-			isLoading,
+			loginFromStore,
 			loginFromStoreMethod,
 			goToRegister,
 			redpple,

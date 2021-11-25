@@ -1,25 +1,23 @@
 <template>
 	<div class="home">
 		<ord-banner />
-		<ord-categories />
-		<div class="home--containerCards">
-			<ord-card v-for="(food, index) in foodList" :key="index" :food="food" />
+		<ord-loading class="loading" v-if="isLoading" />
+		<div v-else>
+			<ord-categories />
+			<div class="home--containerCards">
+				<ord-card v-for="(food, index) in foodList" :key="index" :food="food" />
+			</div>
 		</div>
-		<button id="show-modal" @click="showModal = true">Show Modal</button>
-		{{ count }}{{ title }}---{{ purchases }}
-		<button @click="increase1">+</button>
-		<transition name="modal">
-			<ord-modal v-if="showModal" @close="showModal = false"> </ord-modal>
-		</transition>
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, onMounted, watch } from "vue";
 import OrdBanner from "@/components/organisms/OrdBanner";
 import OrdCategories from "@/components/organisms/OrdCategories";
 import OrdCard from "@/components/organisms/OrdCard";
 import OrdModal from "@/components/organisms/OrdModal";
+import OrdLoading from "@/components/atoms/OrdLoading";
 import { Food } from "@/typing/interface";
 import water from "@/assets/water.png";
 import wine from "@/assets/wine.png";
@@ -35,11 +33,11 @@ export default defineComponent({
 		OrdBanner,
 		OrdCategories,
 		OrdCard,
-		OrdModal,
+		OrdLoading,
 	},
 	setup() {
-		const router = useRouter();
 		const store = useStore();
+		const isLoading = ref(true);
 
 		const count = computed(() => store.state.order.count);
 		const title = computed(() => store.state.order.title);
@@ -53,35 +51,19 @@ export default defineComponent({
 			store.dispatch("increment");
 		};
 
-		const foodList = ref<Food[]>([
-			{
-				id: 0,
-				name: "Water",
-				category: "drinks",
-				description: "First drink",
-				price: 1,
-				image: water,
-				amount: 1,
-			},
-			{
-				id: 1,
-				name: "Wine",
-				category: "breakfast",
-				description: "First wine",
-				price: 1,
-				image: wine,
-				amount: 1,
-			},
-			{
-				id: 2,
-				name: "Wine1",
-				category: "dinner",
-				description: "First wine1",
-				price: 1,
-				image: wine1,
-				amount: 1,
-			},
-		]);
+		const foodList = ref(computed(() => store.state.order.orderListFiltered));
+		const foodList1 = ref(computed(() => store.state.order.orderListFiltered));
+
+		// watch(
+		// 	() => foodList,
+		// 	() => {
+		// 		isLoading.value = false;
+		// 	}
+		// );
+
+		onMounted(async () => {
+			await store.dispatch("recipes").then(() => (isLoading.value = false));
+		});
 
 		const showModal = ref(false);
 		return {
@@ -92,6 +74,8 @@ export default defineComponent({
 			increase,
 			increase1,
 			purchases,
+			isLoading,
+			foodList1,
 		};
 	},
 });

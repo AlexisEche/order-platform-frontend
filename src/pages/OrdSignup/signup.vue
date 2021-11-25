@@ -15,20 +15,33 @@
 
 			<form class="signup--container__form">
 				<input
-					placeholder="Username"
+					placeholder="Firstname"
 					class="signup--container__form_input"
-					v-model="userSignup.username"
+					v-model="userSignup.first_name"
+				/>
+				<input
+					placeholder="Lastname"
+					class="signup--container__form_input"
+					v-model="userSignup.last_name"
 				/>
 
 				<input
+					placeholder="Username @"
+					class="signup--container__form_input"
+					v-model="userSignup.email"
+				/>
+
+				<input
+					type="password"
 					placeholder="Password"
 					class="signup--container__form_input"
 					v-model="userSignup.password"
 				/>
 				<input
+					type="password"
 					placeholder="Confirm Password"
 					class="signup--container__form_input"
-					v-model="userSignup.passwordConfirm"
+					v-model="userSignup.password2"
 				/>
 				<button
 					class="signup--container__form_submitButton"
@@ -42,6 +55,17 @@
 				<span class="signup--register" @click="goToLogin">Login</span>
 			</span>
 		</div>
+		<transition name="modal">
+			<ord-modal v-if="showModal" @close="showModal = false">
+				<div>
+					<p>✓ Email requerido</p>
+					<p>✓ Firstname requerido</p>
+					<p>✓ Lastname requerido</p>
+					<p>✓ Password no menor de 9 dígitos</p>
+					<p>✓ Confirm password requerido</p>
+				</div>
+			</ord-modal>
+		</transition>
 	</div>
 </template>
 <script lang="ts">
@@ -50,32 +74,41 @@ import { UserSignup } from "@/typing/interface";
 import redpple from "@/assets/manzana-roja.svg";
 import signup from "@/assets/signup.svg";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import OrdModal from "@/components/organisms/OrdModal";
 
 export default defineComponent({
 	name: "OrdSignup",
-	components: {},
+	components: {
+		OrdModal,
+	},
 	setup() {
 		const router = useRouter();
+		const store = useStore();
 		const goToLogin = () => {
 			router.push({ name: "Login" });
 		};
+		const showModal = ref(false);
 		const userSignup = ref<UserSignup>({
-			username: "",
+			first_name: "",
+			last_name: "",
+			email: "",
 			password: "",
-			passwordConfirm: "",
+			password2: "",
 		});
-
 		let isLoading = ref(false);
 
 		const signupFromStore = () => {
-			console.log("signup");
+			return store.dispatch("signup", userSignup.value);
 		};
 
 		const signupFromStoreMethod = () => {
-			if (userSignup.value.username && userSignup.value.password) {
+			if (userSignup.value.email && userSignup.value.password) {
 				isLoading.value = true;
-				const test = signupFromStore();
-				router.push({ name: "Login" });
+				const signup = signupFromStore();
+				return signup
+					.then(() => router.push({ name: "Login" }))
+					.catch((error) => (error ? (showModal.value = true) : false));
 			}
 		};
 
@@ -86,6 +119,7 @@ export default defineComponent({
 			goToLogin,
 			redpple,
 			signup,
+			showModal,
 		};
 	},
 });

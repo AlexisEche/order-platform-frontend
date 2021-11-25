@@ -2,12 +2,13 @@ import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export interface Category {
 	name: string;
+	code: string;
 	iconName: IconDefinition;
 	iconColor: string;
 }
 
 export interface Food {
-	id: number;
+	pk: number;
 	name: string;
 	description: string;
 	image: string;
@@ -22,9 +23,11 @@ export interface UserLogin {
 }
 
 export interface UserSignup {
-	username: string;
+	first_name: string;
+	last_name: string;
+	email: string;
 	password: string;
-	passwordConfirm: string;
+	password2: string;
 }
 
 export interface Purchase {

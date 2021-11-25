@@ -3,7 +3,7 @@
 		<img class="cardCart--image" :src="food.image" alt="" />
 		<div class="cardCart--containerDescription">
 			<font-awesome-icon
-				@click="deletePurchase(food.id)"
+				@click="deletePurchase(food.pk)"
 				class="cardCart--trash"
 				:icon="faTrash"
 			/>
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import logo from "@/assets/manzana-roja.svg";
 import { Food } from "@/typing/interface";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -41,25 +41,8 @@ export default defineComponent({
 		const count = ref(1);
 		const amountToDelete = ref({
 			amount: props.food?.amount,
-			id: props.food?.id,
+			pk: props.food?.pk,
 		});
-
-		// const amountByProduct = ref(
-		// 	computed(() => {
-		// 		return amountToDelete.value = {
-		// 			amount: props.food?.amount,
-		// 			id: props.food?.id,
-		// 		};
-		// 	})
-		// );
-
-		watch(
-			() => props.food,
-			(value) => {
-				// amountToDelete.value = value;
-				console.log(value);
-			}
-		);
 
 		const addCountProduct = (food: Food) => {
 			store.dispatch("addCountProduct", food);
@@ -69,8 +52,8 @@ export default defineComponent({
 			store.dispatch("decrementCountProduct", food);
 		};
 
-		const deletePurchase = (id: number) => {
-			store.commit("deletePurchase", id);
+		const deletePurchase = (pk: number) => {
+			store.commit("deletePurchase", pk);
 		};
 
 		return {

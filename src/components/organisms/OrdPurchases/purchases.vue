@@ -16,7 +16,17 @@
 			</p>
 		</div>
 
-		<button class="purchases--confirmButton">Confirm</button>
+		<transition name="modal">
+			<ord-modal v-if="showModal" @close="showModal = false">
+				<p>Gracias por su compra</p>
+			</ord-modal>
+		</transition>
+		<button
+			@click="confirmPurchase(totalPrice)"
+			class="purchases--confirmButton"
+		>
+			Confirm
+		</button>
 	</div>
 </template>
 
@@ -26,25 +36,28 @@ import healthly from "@/assets/healthly.png";
 import OrdPurchase from "@/components/molecules/OrdPurchase";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import OrdModal from "@/components/organisms/OrdModal";
 
-interface Purchase {
-	image: string;
-	title: string;
-	amount: number;
-}
 export default defineComponent({
 	name: "OrdPurchases",
 	components: {
 		OrdPurchase,
+		OrdModal,
 	},
 	props: {},
 	setup() {
 		const router = useRouter();
 		const store = useStore();
+		const showModal = ref(false);
 		const purchases = ref(computed(() => store.state.order.purchases));
 		const totalPrice = ref(
 			computed(() => store.state.order.totalPricePurchases)
 		);
+		const confirmPurchase = (totalPrice: number) => {
+			if (totalPrice != 0) {
+				showModal.value = true;
+			}
+		};
 
 		const goToHome = () => {
 			router.push({ name: "Home" });
@@ -55,6 +68,8 @@ export default defineComponent({
 			purchases,
 			totalPrice,
 			goToHome,
+			showModal,
+			confirmPurchase,
 		};
 	},
 });
