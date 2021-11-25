@@ -23,7 +23,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import logo from "@/assets/manzana-roja.svg";
 import { Food } from "@/typing/interface";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useStore } from "vuex";
@@ -57,7 +56,6 @@ export default defineComponent({
 		};
 
 		return {
-			logo,
 			faTrash,
 			deletePurchase,
 			count,

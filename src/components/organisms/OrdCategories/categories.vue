@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import healthly from "@/assets/healthly.png";
 import OrdCategory from "@/components/molecules/OrdCategory";
 import { Category } from "@/typing/interface";
 import {
@@ -75,7 +74,6 @@ export default defineComponent({
 			},
 		]);
 		return {
-			healthly,
 			categories,
 			filterByCategory,
 		};
